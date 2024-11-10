@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Phone>
+@{
+    ViewData["Title"] = "Phone Inventory";
+}
+<h2>Phone Inventory</h2>
+
+<a asp-action="AddPhone" class="btn btn-primary">Add New Phone</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Model</th>
+            <th>Quantity</th>
+            <th>Added Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var phone in Model)
+        {
+            <tr>
+                <td>@phone.Model</td>
+                <td>@phone.Quantity</td>
+                <td>@phone.AddedDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

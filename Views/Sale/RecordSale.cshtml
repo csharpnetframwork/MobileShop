@@ -1,0 +1,17 @@
+﻿@model Sale
+@{
+    ViewData["Title"] = "Record New Sale";
+}
+<h2>Record New Sale</h2>
+
+<form asp-action="RecordSale" method="post">
+    <div class="form-group">
+        <label>Phone ID</label>
+        <input asp-for="PhoneId" class="form-control" placeholder="Enter Phone ID" />
+    </div>
+    <div class="form-group">
+        <label>Quantity</label>
+        <input asp-for="Quantity" type="number" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Record Sale</button>
+</form>
