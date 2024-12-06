@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vishal Mobile Shop</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .content-wrapper {
+            min-height: calc(100vh - 70px);
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .top-header {
+
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .user-section {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .datetime {
+            text-align: right;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .user-circle {
+            width: 40px;
+            height: 40px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .user-circle:hover {
+                background: #0056b3;
+            }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+        }
+
+            .user-dropdown.show {
+                display: block;
+            }
+
+        .user-info {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-name {
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 10px 15px;
+            text-align: left;
+            border: none;
+            background: none;
+            color: #dc3545;
+            transition: background-color 0.3s;
+        }
+
+            .logout-btn:hover {
+                background-color: #f8f9fa;
+            }
+
+      
+
+        .user-section {
+            right: 15px;
+        }
+
+        .datetime {
+            display: none;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <header class="top-header" style="height:50px">
+        <div class="user-section">
+            <div class="datetime">
+                <div id="current-time"></div>
+                <div id="current-date"></div>
+            </div>
+            @if (ViewData["Username"] != null)
+            {
+                <div class="user-circle" onclick="toggleUserMenu()">
+                    @(ViewData["Username"].ToString()[0].ToString().ToUpper())
+                </div>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="user-info">
+                        <p class="user-name">@ViewData["Username"]</p>
+                    </div>
+                    <a href="/Login/Logout" class="logout-btn">
+                        Logout
+                    </a>
+                </div>
+            }
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const timeElement = document.getElementById('current-time');
+            const dateElement = document.getElementById('current-date');
+
+            timeElement.textContent = now.toLocaleTimeString();
+            dateElement.textContent = now.toLocaleDateString();
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('userDropdown');
+            const userCircle = document.querySelector('.user-circle');
+
+            if (!userCircle.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Update time every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

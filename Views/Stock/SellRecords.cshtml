@@ -1,0 +1,206 @@
+﻿@{
+    ViewData["Title"] = "Sell Records";
+}
+@model List<Sell>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="page-title">Sell Records</h2>
+        <div class="d-flex gap-2">
+            <a href="/Stock" class="btn btn-secondary add-btn" >
+                <i class="bi bi-arrow-left me-2"></i>Back to Stock Items
+            </a>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <form class="row g-3" method="get">
+                <div class="col-md-3">
+                    <label class="form-label">Date Range</label>
+                    <select class="form-select" name="dateRange">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Search</label>
+                    <input type="text" class="form-control" name="search" placeholder="Search by name or model...">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sell Records Table -->
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Model</th>
+                    <th>Specification</th>
+                    <th>Rate</th>
+                    <th>Sell Date</th>
+                    <th>Modified By</th>
+                    <th>Modified Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Any() ?? false)
+                {
+                    @foreach (var record in Model)
+                    {
+                        <tr>
+                            <td>@record.Name</td>
+                            <td>@record.Model</td>
+                            <td>
+                                <span class="text-truncate d-inline-block" style="max-width: 200px;"
+                                      title="@record.Specification">
+                                    @record.Specification
+                                </span>
+                            </td>
+                            <td>@record.Rate</td>
+                            <td>@record.SellDate.ToShortDateString()</td>
+                            <td>@record.ModifyBy</td>
+                            <td>@record.ModifyDate</td>
+                            <td>
+                                <span class="badge bg-@(record.iteminstock ? "success" : "danger")">
+                                    @(record.iteminstock ? "In Stock" : "Sold")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">No sell records found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (Model?.Any() ?? false)
+    {
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div class="text-muted">
+                Showing <span class="fw-bold">1-@Model.Count</span> of <span class="fw-bold">@Model.Count</span> records
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination mb-0">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+</div>
+
+<style>
+    /* Base styles */
+    .page-title {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 0;
+        font-size: 1.5rem;
+    }
+
+    /* Button styles */
+    .add-btn {
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        padding: 0.5rem 1.25rem;
+        font-weight: 500;
+    }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+    /* Table styles */
+    .table {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .table th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            color: #495057;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 0.75rem;
+        }
+
+        .table td {
+            padding: 0.75rem;
+            vertical-align: middle;
+            color: #495057;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+        }
+
+            .table tbody tr:hover {
+                background-color: #f8f9fa;
+            }
+
+    /* Form styles */
+    .form-control, .form-select {
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        padding: 0.625rem 0.875rem;
+        transition: all 0.2s ease;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #4c6fff;
+            box-shadow: 0 0 0 0.2rem rgba(76, 111, 255, 0.1);
+        }
+
+    /* Card styles */
+    .card {
+        border: none;
+        border-radius: 12px;
+    }
+
+    /* Pagination styles */
+    .pagination .page-link {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        margin: 0 0.2rem;
+        color: #4c6fff;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #4c6fff;
+        border-color: #4c6fff;
+    }
+
+    /* Badge styles */
+    .badge {
+        padding: 0.5em 0.8em;
+        font-weight: 500;
+        border-radius: 6px;
+    }
+</style>

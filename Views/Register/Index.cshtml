@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model RegisterModel
+@{
+}
+
+<div class="container">
+    <div class="register-container">
+        <div class="register-header">
+            <h2>Create Account</h2>
+            <p class="text-muted">Join our community today</p>
+        </div>
+
+        <form id="registerForm" novalidate method="post" asp-action="Index" asp-controller="Register">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="username" placeholder="Username" required asp-for="Username">
+                <label for="username">Username</label>
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" required asp-for="Email">
+                <label for="email">Email address</label>
+                <div class="invalid-feedback">
+                    Please enter a valid email address.
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" placeholder="Password" required asp-for="Password">
+                <label for="password">Password</label>
+                <div class="password-requirements">
+                    Password must contain:
+                    <ul>
+                        <li>At least 8 characters</li>
+                        <li>One uppercase letter</li>
+                        <li>One number</li>
+                        <li>One special character</li>
+                    </ul>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-register">Create Account</button>
+
+            <div class="login-link">
+                Already have an account? <a href="/login">Log in here</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-color: #2c3e50;
+        --accent-color: #3498db;
+        --text-light: #ecf0f1;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        position: relative;
+        padding-bottom: 60px; /* Height of footer */
+    }
+
+    .register-container {
+        max-width: 450px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 4rem; /* Add space above footer */
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px; /* Fixed height */
+        line-height: 60px; /* Vertically center text */
+        background-color: var(--primary-color);
+        color: var(--text-light);
+    }
+
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+            .footer a:hover {
+                color: var(--text-light);
+                text-decoration: underline;
+            }
+
+    /* Form styles */
+    .form-control {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+    }
+
+    .btn-register {
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: white;
+        padding: 0.75rem;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        margin-top: 1rem;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+        .login-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+    /* Ensure content doesn't overlap with footer on smaller screens */
+   
+
+    .register-container {
+        margin-bottom: 5rem;
+    }
+
+    }
+</style>
